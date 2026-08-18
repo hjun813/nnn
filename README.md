@@ -51,3 +51,10 @@ npm run db:migrate
 ```
 
 Drizzle migration 적용 후 `/register`에서 계정을 만들 수 있습니다. 비밀번호는 bcrypt로 해시되며 Dashboard는 로그인한 사용자의 공고만 조회합니다.
+
+## API 문서
+
+- Swagger UI: `http://localhost:3000/api-docs`
+- OpenAPI 3.1 JSON: `http://localhost:3000/api/openapi`
+
+Swagger UI의 인증 API는 로그인 후 생성된 Auth.js 세션 쿠키를 사용합니다. 현재 공고·상태·제출물 CRUD 계약을 문서화합니다.

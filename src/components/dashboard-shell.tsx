@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Dashboard } from "@/domain/application";
 import { SignOutButton } from "./sign-out-button";
 
@@ -11,7 +12,7 @@ export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; ema
         <div className="brand">Apply<span>Flow</span></div>
         <nav className="nav" aria-label="주요 메뉴">
           <a href="#today" aria-current="page">Today <small>{dashboard.today.length}</small></a>
-          <a href="#applications">Applications</a>
+          <Link href="/applications">Applications</Link>
           <a href="#settings">Settings</a>
         </nav>
         <div className="sidebar-note">{email && <p>{email}</p>}<p>발견한 기회를 놓치지 않고<br />실제 지원까지 이어가세요.</p>{email && <SignOutButton />}</div>
@@ -24,7 +25,7 @@ export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; ema
             <h1>가장 중요한 지원부터<br />끝내볼까요?</h1>
             <p className="intro">이번 주 마감 공고가 {dashboard.thisWeek.length}개 있습니다.</p>
           </div>
-          <button type="button" className="add-button">+ 공고 추가</button>
+          <Link href="/applications/new" className="add-button">+ 공고 추가</Link>
         </header>
 
         <section className="summary" aria-label="지원 요약">
@@ -36,7 +37,7 @@ export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; ema
         <section>
           <div className="section-heading"><h2>오늘 할 일</h2><p>공고별 가장 중요한 행동만 보여드려요.</p></div>
           <div className="action-list">
-            {dashboard.today.length === 0 && <div className="empty-state"><strong>아직 오늘의 행동이 없습니다.</strong><p>첫 공고를 추가하면 마감과 준비 상태를 바탕으로 다음 행동을 알려드릴게요.</p><button className="add-button" type="button">첫 공고 추가</button></div>}
+            {dashboard.today.length === 0 && <div className="empty-state"><strong>아직 오늘의 행동이 없습니다.</strong><p>첫 공고를 추가하면 마감과 준비 상태를 바탕으로 다음 행동을 알려드릴게요.</p><Link className="add-button" href="/applications/new">첫 공고 추가</Link></div>}
             {dashboard.today.map((item) => (
               <article className="action-card" key={item.jobId}>
                 <div className="dday">{item.dDay === 0 ? "D-Day" : `D-${item.dDay}`}</div>

@@ -1,4 +1,4 @@
-import { sql } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import { boolean, check, index, integer, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 
 export const applicationStatus = pgEnum("application_status", ["SAVED", "IN_PROGRESS", "APPLIED", "EXPIRED", "ARCHIVED"]);
@@ -69,3 +69,12 @@ export const statusHistory = pgTable("status_history", {
   reason: text("reason"),
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
+
+export const jobPostingsRelations = relations(jobPostings, ({ many, one }) => ({
+  user: one(users, { fields: [jobPostings.userId], references: [users.id] }),
+  applicationTasks: many(applicationTasks),
+  essayQuestions: many(essayQuestions),
+  statusHistory: many(statusHistory),
+}));
+export const applicationTasksRelations = relations(applicationTasks, ({ one }) => ({ jobPosting: one(jobPostings, { fields: [applicationTasks.jobPostingId], references: [jobPostings.id] }) }));
+export const essayQuestionsRelations = relations(essayQuestions, ({ one }) => ({ jobPosting: one(jobPostings, { fields: [essayQuestions.jobPostingId], references: [jobPostings.id] }) }));
