@@ -38,12 +38,16 @@
 - 결정: TypeScript, Next.js App Router, React로 웹을 구성하고 Vitest로 도메인 규칙을 검증한다. 데이터 계층은 PostgreSQL을 기준으로 다음 마일스톤에서 ORM을 확정한다.
 - 이유: 한 코드베이스에서 UI와 서버 기능을 빠르게 구성하면서 핵심 업무 규칙을 프레임워크와 분리해 테스트할 수 있다.
 
+## ADR-007 데이터 계층과 인증
+
+- 상태: 승인
+- 결정: PostgreSQL 접근에는 Drizzle ORM을 사용한다. 초기 인증은 Auth.js Credentials와 bcrypt 비밀번호 해시, JWT 세션으로 구성한다.
+- 이유: 스키마와 query의 타입 안전성을 확보하면서 자체 이메일 계정과 서버 측 사용자 데이터 격리를 구현할 수 있다.
+
 ## 미결정 항목
 
 | 항목 | 선택지 | 결정 시점 |
 |---|---|---|
-| 인증 | Auth.js / Supabase / Clerk | Sprint 0 |
-| ORM | Prisma / Drizzle | Sprint 0 |
 | 배포 | Vercel / container platform | Sprint 1 이전 |
 | Queue | DB job / managed queue | Sprint 2 이전 |
 | AI 공급자·모델 | 품질·비용 평가 | Sprint 3 이전 |

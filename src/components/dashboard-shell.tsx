@@ -1,9 +1,10 @@
 import type { Dashboard } from "@/domain/application";
+import { SignOutButton } from "./sign-out-button";
 
 const formatDate = (value: Date) =>
   new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric" }).format(value);
 
-export function DashboardShell({ dashboard }: { dashboard: Dashboard }) {
+export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; email?: string }) {
   return (
     <div className="app-shell">
       <aside className="sidebar">
@@ -13,7 +14,7 @@ export function DashboardShell({ dashboard }: { dashboard: Dashboard }) {
           <a href="#applications">Applications</a>
           <a href="#settings">Settings</a>
         </nav>
-        <p className="sidebar-note">발견한 기회를 놓치지 않고<br />실제 지원까지 이어가세요.</p>
+        <div className="sidebar-note">{email && <p>{email}</p>}<p>발견한 기회를 놓치지 않고<br />실제 지원까지 이어가세요.</p>{email && <SignOutButton />}</div>
       </aside>
 
       <main className="main" id="today">
@@ -35,6 +36,7 @@ export function DashboardShell({ dashboard }: { dashboard: Dashboard }) {
         <section>
           <div className="section-heading"><h2>오늘 할 일</h2><p>공고별 가장 중요한 행동만 보여드려요.</p></div>
           <div className="action-list">
+            {dashboard.today.length === 0 && <div className="empty-state"><strong>아직 오늘의 행동이 없습니다.</strong><p>첫 공고를 추가하면 마감과 준비 상태를 바탕으로 다음 행동을 알려드릴게요.</p><button className="add-button" type="button">첫 공고 추가</button></div>}
             {dashboard.today.map((item) => (
               <article className="action-card" key={item.jobId}>
                 <div className="dday">{item.dDay === 0 ? "D-Day" : `D-${item.dDay}`}</div>
@@ -54,6 +56,7 @@ export function DashboardShell({ dashboard }: { dashboard: Dashboard }) {
             <table>
               <thead><tr><th>회사</th><th>직무</th><th>기준일</th><th>진행률</th></tr></thead>
               <tbody>
+                {dashboard.thisWeek.length === 0 && <tr><td colSpan={4} className="table-empty">이번 주 마감 공고가 없습니다.</td></tr>}
                 {dashboard.thisWeek.map((item) => (
                   <tr key={item.jobId}>
                     <td><strong>{item.companyName}</strong></td>

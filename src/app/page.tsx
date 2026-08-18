@@ -1,6 +1,5 @@
-import { DashboardShell } from "@/components/dashboard-shell";
-import { getDashboardPreview } from "@/lib/demo-data";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <DashboardShell dashboard={getDashboardPreview()} />;
+  redirect("/dashboard");
 }

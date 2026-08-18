@@ -43,4 +43,11 @@ npm test
 npm run build
 ```
 
-PostgreSQL 초기 스키마는 `db/001_initial.sql`에 있으며 실제 연결과 migration 도구는 다음 개발 단계에서 확정합니다. 로컬 비밀값은 `.env.example`을 참고하되 `.env` 파일은 커밋하지 않습니다.
+`.env.example`을 복사해 `.env.local`을 만들고 PostgreSQL 연결 문자열과 인증 secret을 설정합니다. 로컬 비밀값 파일은 커밋하지 않습니다.
+
+```bash
+npm run db:generate
+npm run db:migrate
+```
+
+Drizzle migration 적용 후 `/register`에서 계정을 만들 수 있습니다. 비밀번호는 bcrypt로 해시되며 Dashboard는 로그인한 사용자의 공고만 조회합니다.
