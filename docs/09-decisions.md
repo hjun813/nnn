@@ -44,11 +44,17 @@
 - 결정: PostgreSQL 접근에는 Drizzle ORM을 사용한다. 초기 인증은 Auth.js Credentials와 bcrypt 비밀번호 해시, JWT 세션으로 구성한다.
 - 이유: 스키마와 query의 타입 안전성을 확보하면서 자체 이메일 계정과 서버 측 사용자 데이터 격리를 구현할 수 있다.
 
+## ADR-008 컨테이너 실행 구조
+
+- 상태: 승인
+- 결정: PostgreSQL, 일회성 migration, Next.js standalone app을 Docker Compose 서비스로 분리한다. 앱은 DB healthcheck와 migration 성공 이후에 시작한다.
+- 이유: `docker compose up` 한 번으로 재현 가능한 환경을 만들고 schema 적용 실패 상태에서 앱이 먼저 실행되는 문제를 방지한다.
+
 ## 미결정 항목
 
 | 항목 | 선택지 | 결정 시점 |
 |---|---|---|
-| 배포 | Vercel / container platform | Sprint 1 이전 |
+| 배포 | container platform 우선, 필요 시 Vercel 비교 | 출시 이전 |
 | Queue | DB job / managed queue | Sprint 2 이전 |
 | AI 공급자·모델 | 품질·비용 평가 | Sprint 3 이전 |
 | 동적 페이지 수집 | managed browser / self-hosted | Sprint 3 이전 |

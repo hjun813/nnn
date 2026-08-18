@@ -53,6 +53,27 @@ npm run db:migrate
 
 Docker Compose는 `postgres:17-alpine`을 `localhost:5432`에 실행하고 named volume에 데이터를 보존합니다. 종료는 `npm run db:down`, 로그 확인은 `npm run db:logs`를 사용합니다.
 
+### 전체 서비스를 Docker로 실행
+
+```bash
+docker compose up -d --build
+# 또는
+npm run docker:up
+```
+
+Compose는 다음 순서로 서비스를 시작합니다.
+
+```text
+postgres healthy
+→ migrate 완료
+→ app 시작
+→ /api/health 검사
+```
+
+접속 주소는 `http://localhost:3000`이며 `APP_PORT`로 호스트 포트를 바꿀 수 있습니다. 상태 확인은 `npm run docker:ps`, 로그는 `npm run docker:logs`, 종료는 `npm run docker:down`을 사용합니다.
+
+로컬 기본 비밀번호와 secret은 개발 편의를 위한 값입니다. 공유·배포 환경에서는 `.env` 또는 CI secret으로 `POSTGRES_PASSWORD`, `AUTH_SECRET`, `CRON_SECRET`을 반드시 변경합니다. DB 데이터는 `applyflow-postgres-data` named volume에 남으며 일반적인 `docker compose down`으로 삭제되지 않습니다.
+
 Drizzle migration 적용 후 `/register`에서 계정을 만들 수 있습니다. 비밀번호는 bcrypt로 해시되며 Dashboard는 로그인한 사용자의 공고만 조회합니다.
 
 ## API 문서

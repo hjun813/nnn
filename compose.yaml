@@ -6,7 +6,7 @@ services:
     environment:
       POSTGRES_DB: applyflow
       POSTGRES_USER: applyflow
-      POSTGRES_PASSWORD: applyflow
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-applyflow}
       TZ: Asia/Seoul
     ports:
       - "5432:5432"
@@ -17,6 +17,43 @@ services:
       interval: 5s
       timeout: 3s
       retries: 10
+
+  migrate:
+    build:
+      context: .
+      target: migrate
+    environment:
+      DATABASE_URL: postgresql://applyflow:${POSTGRES_PASSWORD:-applyflow}@postgres:5432/applyflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  app:
+    build:
+      context: .
+      target: runner
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://applyflow:${POSTGRES_PASSWORD:-applyflow}@postgres:5432/applyflow
+      AUTH_SECRET: ${AUTH_SECRET:-local-docker-only-change-this-secret}
+      AUTH_URL: ${AUTH_URL:-http://localhost:3000}
+      CRON_SECRET: ${CRON_SECRET:-local-docker-cron-change-this-secret}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      NODE_ENV: production
+    ports:
+      - "${APP_PORT:-3000}:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://127.0.0.1:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
 
 volumes:
   applyflow-postgres-data:

@@ -15,6 +15,10 @@
     "db:migrate": "drizzle-kit migrate",
     "db:studio": "drizzle-kit studio",
     "db:up": "docker compose up -d postgres",
+    "docker:up": "docker compose up -d --build",
+    "docker:down": "docker compose down",
+    "docker:logs": "docker compose logs -f app postgres",
+    "docker:ps": "docker compose ps",
     "db:down": "docker compose down",
     "db:logs": "docker compose logs -f postgres"
   },
