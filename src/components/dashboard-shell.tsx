@@ -45,7 +45,7 @@ export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; ema
                   <h3 className="job-title">{item.companyName} · {item.positionTitle}</h3>
                   <p className="job-meta">{item.nextAction.label} · 준비 {item.progress ?? 0}%</p>
                 </div>
-                <a className="action-link" href={`#${item.jobId}`}>계속 준비하기</a>
+                <Link className="action-link" href={`/applications/${item.jobId}`}>계속 준비하기</Link>
               </article>
             ))}
           </div>

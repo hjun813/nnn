@@ -84,6 +84,10 @@
 - AI 공급자 장애 시 직접 등록 유지
 - scheduler 장애 후 누락 구간을 재처리할 수 있는 멱등 작업
 
+### 만료 작업 실행
+
+`POST /api/internal/expire`를 하루 한 번 이상 호출한다. `Authorization: Bearer <CRON_SECRET>` 헤더가 필요하며, Saved/In Progress이면서 실제 마감 시각을 지난 공고만 Expired로 변경한다. 같은 작업을 반복해도 이미 만료된 공고는 다시 처리하지 않는다.
+
 ## 7. 출시 체크리스트
 
 - P0 인수 조건과 E2E 통과

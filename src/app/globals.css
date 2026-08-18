@@ -109,6 +109,9 @@ th { color: var(--muted); background: #fafbf8; font-size: 12px; text-transform: 
 .form-actions { display: flex; justify-content: flex-end; gap: 10px; }
 .secondary-button { display: inline-flex; align-items: center; justify-content: center; padding: 11px 15px; color: var(--green); background: white; border: 1px solid var(--line); border-radius: 9px; font-weight: 750; cursor: pointer; }
 .job-list { display: grid; gap: 10px; margin-top: 34px; }
+.filter-tabs { display: flex; gap: 7px; margin-top: 28px; }
+.filter-tabs a { padding: 8px 12px; color: var(--muted); border-radius: 8px; font-size: 13px; }
+.filter-tabs a[aria-current="page"] { color: var(--green); background: var(--green-soft); font-weight: 800; }
 .job-row { display: grid; grid-template-columns: 1fr auto 90px; align-items: center; gap: 20px; padding: 18px 20px; background: var(--card); border: 1px solid var(--line); border-radius: 13px; }
 .job-row p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
 .job-row small { color: var(--muted); text-align: right; }
@@ -125,6 +128,11 @@ th { color: var(--muted); background: #fafbf8; font-size: 12px; text-transform: 
 .task-item small { color: var(--muted); }
 .memo { margin-top: 16px; }
 .memo p { color: var(--muted); white-space: pre-wrap; }
+.header-actions, .status-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
+.status-actions { margin-top: 26px; }
+.text-button { padding: 9px; border: 0; background: transparent; cursor: pointer; }
+.text-button.danger { color: #ad3f2d; }
+.status-actions .form-error { flex-basis: 100%; }
 .swagger-page { min-height: 100vh; background: white; }
 .swagger-top { display: flex; justify-content: space-between; padding: 14px 24px; color: white; background: #19382c; font-size: 13px; }
 
