@@ -15,6 +15,7 @@
 - [개발 계획서](docs/07-development-plan.md)
 - [테스트 및 운영 계획](docs/08-test-operations.md)
 - [의사결정 기록](docs/09-decisions.md)
+- [수동 등록 MVP 출시 체크리스트](docs/10-release-checklist.md)
 
 ## MVP 원칙
 
@@ -22,6 +23,8 @@
 2. AI는 등록 비용을 줄이지만 저장을 막는 필수 의존성이 아니다.
 3. 마감일과 다음 행동이 항상 가장 먼저 보여야 한다.
 4. 사용자의 명시적인 확인 없이 AI 결과를 확정하지 않는다.
+
+현재 MVP는 수동 등록에 집중합니다. AI URL 분석은 출시 후 `CreateJobInput` 계약을 재사용하는 독립 모듈로 추가할 예정입니다.
 
 ## 개발 시작하기
 

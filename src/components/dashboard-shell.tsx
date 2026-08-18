@@ -14,7 +14,7 @@ export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; ema
           <a href="#today" aria-current="page">Today <small>{dashboard.today.length}</small></a>
           <Link href="/applications">Applications</Link>
           <Link href="/notifications">Notifications</Link>
-          <a href="#settings">Settings</a>
+          <Link href="/settings">Settings</Link>
         </nav>
         <div className="sidebar-note">{email && <p>{email}</p>}<p>발견한 기회를 놓치지 않고<br />실제 지원까지 이어가세요.</p>{email && <SignOutButton />}</div>
       </aside>

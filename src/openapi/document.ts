@@ -2,10 +2,13 @@ export const openApiDocument = {
   openapi: "3.1.0",
   info: { title: "ApplyFlow API", version: "0.1.0", description: "채용 공고와 지원 준비 작업을 관리하는 ApplyFlow MVP API" },
   servers: [{ url: "/api", description: "현재 환경" }],
-  tags: [{ name: "Auth" }, { name: "Jobs" }, { name: "Tasks" }, { name: "Notifications" }],
+  tags: [{ name: "Auth" }, { name: "Account" }, { name: "Jobs" }, { name: "Tasks" }, { name: "Notifications" }],
   paths: {
     "/register": {
       post: { tags: ["Auth"], summary: "이메일 회원가입", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/RegistrationInput" } } } }, responses: { "201": { description: "가입 완료" }, "400": { $ref: "#/components/responses/BadRequest" }, "409": { description: "이미 가입된 이메일" } } },
+    },
+    "/account": {
+      delete: { tags: ["Account"], summary: "계정과 연결 데이터 영구 삭제", security: [{ sessionCookie: [] }], responses: { "204": { description: "삭제 완료" }, "401": { $ref: "#/components/responses/Unauthorized" } } },
     },
     "/jobs": {
       get: { tags: ["Jobs"], summary: "내 공고 목록", security: [{ sessionCookie: [] }], responses: { "200": { description: "공고 목록" }, "401": { $ref: "#/components/responses/Unauthorized" } } },

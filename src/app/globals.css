@@ -147,6 +147,9 @@ th { color: var(--muted); background: #fafbf8; font-size: 12px; text-transform: 
 .notification-row.read .notification-dot { background: #bdc6c0; }
 .notification-row p { margin: 5px 0 0; color: var(--muted); font-size: 13px; }
 .notification-row time { color: var(--muted); font-size: 12px; }
+.settings-list { display: grid; gap: 16px; margin-top: 32px; }
+.danger-zone { border-color: #efc9c1; }
+.danger-zone p { color: var(--muted); }
 
 @media (max-width: 760px) {
   .app-shell { display: block; }

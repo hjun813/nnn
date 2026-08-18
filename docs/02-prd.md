@@ -55,12 +55,14 @@
 
 ### FR-AI URL 분석
 
+> MVP 이후 확장 범위다. 현재 API와 수동 등록 도메인에 영향을 주지 않는 별도 분석 모듈로 추가한다.
+
 | ID | 요구사항 | 우선순위 | 인수 조건 |
 |---|---|---:|---|
-| AI-01 | URL 분석을 요청한다 | P1 | 즉시 분석 상태 식별자 반환 |
-| AI-02 | 구조화된 결과와 근거를 표시한다 | P1 | 필드별 수정 가능, 불명 값은 비워 둠 |
-| AI-03 | 검토한 결과를 공고로 저장한다 | P1 | 명시적 확인 전 본 데이터 미반영 |
-| AI-04 | 실패 후 직접 입력으로 전환한다 | P1 | 입력한 URL 유지 |
+| AI-01 | URL 분석을 요청한다 | P2 | 즉시 분석 상태 식별자 반환 |
+| AI-02 | 구조화된 결과와 근거를 표시한다 | P2 | 필드별 수정 가능, 불명 값은 비워 둠 |
+| AI-03 | 검토한 결과를 공고로 저장한다 | P2 | 명시적 확인 전 본 데이터 미반영 |
+| AI-04 | 실패 후 직접 입력으로 전환한다 | P2 | 입력한 URL 유지 |
 | AI-05 | 내부망 URL 접근을 차단한다 | P0 | localhost, 사설·링크로컬 IP 거부 |
 
 ### FR-NOTIFY 알림
@@ -97,4 +99,3 @@
 `sign_up`, `job_create_started`, `job_created`, `analysis_requested`, `analysis_completed`, `analysis_failed`, `analysis_confirmed`, `task_status_changed`, `application_status_changed`, `application_applied`, `job_archived`, `notification_opened`를 기록한다.
 
 이벤트에는 userId의 분석용 비식별 키, jobId, 발생 시각, 이전·이후 상태를 포함하되 공고 원문과 자기소개서 내용은 기본 분석 속성에서 제외한다.
-
