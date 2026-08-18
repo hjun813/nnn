@@ -5,6 +5,9 @@ import { SignOutButton } from "./sign-out-button";
 const formatDate = (value: Date) =>
   new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric" }).format(value);
 
+const formatToday = () =>
+  new Intl.DateTimeFormat("ko-KR", { month: "long", day: "numeric", weekday: "long" }).format(new Date());
+
 export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; email?: string }) {
   return (
     <div className="app-shell">
@@ -22,9 +25,9 @@ export function DashboardShell({ dashboard, email }: { dashboard: Dashboard; ema
       <main className="main" id="today">
         <header className="topbar">
           <div>
-            <p className="eyebrow">Tuesday · Today</p>
-            <h1>가장 중요한 지원부터<br />끝내볼까요?</h1>
-            <p className="intro">이번 주 마감 공고가 {dashboard.thisWeek.length}개 있습니다.</p>
+            <p className="eyebrow">{formatToday()}</p>
+            <h1>오늘 가장 중요한<br />지원부터 시작해요</h1>
+            <p className="intro">이번 주 마감 공고는 {dashboard.thisWeek.length}개예요. 급한 순서대로 준비해보세요.</p>
           </div>
           <Link href="/applications/new" className="add-button">+ 공고 추가</Link>
         </header>
