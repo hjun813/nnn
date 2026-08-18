@@ -2,7 +2,7 @@ export const openApiDocument = {
   openapi: "3.1.0",
   info: { title: "ApplyFlow API", version: "0.1.0", description: "채용 공고와 지원 준비 작업을 관리하는 ApplyFlow MVP API" },
   servers: [{ url: "/api", description: "현재 환경" }],
-  tags: [{ name: "Auth" }, { name: "Jobs" }, { name: "Tasks" }],
+  tags: [{ name: "Auth" }, { name: "Jobs" }, { name: "Tasks" }, { name: "Notifications" }],
   paths: {
     "/register": {
       post: { tags: ["Auth"], summary: "이메일 회원가입", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/RegistrationInput" } } } }, responses: { "201": { description: "가입 완료" }, "400": { $ref: "#/components/responses/BadRequest" }, "409": { description: "이미 가입된 이메일" } } },
@@ -45,6 +45,13 @@ export const openApiDocument = {
       parameters: [{ $ref: "#/components/parameters/JobId" }, { name: "taskId", in: "path", required: true, schema: { type: "string", format: "uuid" } }],
       patch: { tags: ["Tasks"], summary: "준비 작업 수정", security: [{ sessionCookie: [] }], requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/TaskInput" } } } }, responses: { "200": { description: "작업 수정 완료" } } },
       delete: { tags: ["Tasks"], summary: "준비 작업 삭제", security: [{ sessionCookie: [] }], responses: { "204": { description: "삭제 완료" } } },
+    },
+    "/notifications": {
+      get: { tags: ["Notifications"], summary: "내 알림 목록", security: [{ sessionCookie: [] }], responses: { "200": { description: "최근 알림 목록" }, "401": { $ref: "#/components/responses/Unauthorized" } } },
+      post: { tags: ["Notifications"], summary: "모든 알림 읽음 처리", security: [{ sessionCookie: [] }], responses: { "200": { description: "읽음 처리 개수" }, "401": { $ref: "#/components/responses/Unauthorized" } } },
+    },
+    "/notifications/{notificationId}/read": {
+      post: { tags: ["Notifications"], summary: "알림 읽음 처리", security: [{ sessionCookie: [] }], parameters: [{ name: "notificationId", in: "path", required: true, schema: { type: "string", format: "uuid" } }], responses: { "200": { description: "읽음 처리 완료" }, "404": { $ref: "#/components/responses/NotFound" } } },
     },
   },
   components: {

@@ -88,6 +88,8 @@
 
 `POST /api/internal/expire`를 하루 한 번 이상 호출한다. `Authorization: Bearer <CRON_SECRET>` 헤더가 필요하며, Saved/In Progress이면서 실제 마감 시각을 지난 공고만 Expired로 변경한다. 같은 작업을 반복해도 이미 만료된 공고는 다시 처리하지 않는다.
 
+`POST /api/internal/notifications`도 같은 인증 헤더로 매일 실행한다. 실제 마감 기준 D-7/D-3/D-1 알림을 생성하며 유일 제약과 conflict 무시 처리로 중복 생성을 방지한다.
+
 ## 7. 출시 체크리스트
 
 - P0 인수 조건과 E2E 통과

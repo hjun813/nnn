@@ -1,10 +1,11 @@
 import { relations, sql } from "drizzle-orm";
-import { boolean, check, index, integer, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import { boolean, check, date, index, integer, pgEnum, pgTable, text, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
 
 export const applicationStatus = pgEnum("application_status", ["SAVED", "IN_PROGRESS", "APPLIED", "EXPIRED", "ARCHIVED"]);
 export const taskStatus = pgEnum("task_status", ["TODO", "IN_PROGRESS", "DONE", "NOT_REQUIRED"]);
 export const taskType = pgEnum("task_type", ["RESUME", "PORTFOLIO", "ESSAY", "ASSIGNMENT", "CODING_TEST", "CUSTOM"]);
 export const deadlineType = pgEnum("deadline_type", ["FIXED", "ALWAYS_OPEN", "UNKNOWN"]);
+export const notificationKind = pgEnum("notification_kind", ["DEADLINE_D7", "DEADLINE_D3", "DEADLINE_D1"]);
 
 export const users = pgTable("app_user", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -70,11 +71,29 @@ export const statusHistory = pgTable("status_history", {
   createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
 });
 
+export const notifications = pgTable("notification", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
+  jobPostingId: uuid("job_posting_id").notNull().references(() => jobPostings.id, { onDelete: "cascade" }),
+  kind: notificationKind("kind").notNull(),
+  triggerDate: date("trigger_date").notNull(),
+  readAt: timestamp("read_at", { withTimezone: true }),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+}, (table) => [
+  uniqueIndex("notification_delivery_unique").on(table.userId, table.jobPostingId, table.kind, table.triggerDate),
+  index("notification_user_read_created_idx").on(table.userId, table.readAt, table.createdAt),
+]);
+
 export const jobPostingsRelations = relations(jobPostings, ({ many, one }) => ({
   user: one(users, { fields: [jobPostings.userId], references: [users.id] }),
   applicationTasks: many(applicationTasks),
   essayQuestions: many(essayQuestions),
   statusHistory: many(statusHistory),
+  notifications: many(notifications),
 }));
 export const applicationTasksRelations = relations(applicationTasks, ({ one }) => ({ jobPosting: one(jobPostings, { fields: [applicationTasks.jobPostingId], references: [jobPostings.id] }) }));
 export const essayQuestionsRelations = relations(essayQuestions, ({ one }) => ({ jobPosting: one(jobPostings, { fields: [essayQuestions.jobPostingId], references: [jobPostings.id] }) }));
+export const notificationsRelations = relations(notifications, ({ one }) => ({
+  jobPosting: one(jobPostings, { fields: [notifications.jobPostingId], references: [jobPostings.id] }),
+  user: one(users, { fields: [notifications.userId], references: [users.id] }),
+}));
