@@ -23,3 +23,24 @@
 3. 마감일과 다음 행동이 항상 가장 먼저 보여야 한다.
 4. 사용자의 명시적인 확인 없이 AI 결과를 확정하지 않는다.
 
+## 개발 시작하기
+
+요구 환경은 Node.js 24와 npm 11 이상입니다.
+
+```bash
+npm install
+npm run dev
+```
+
+브라우저에서 `http://localhost:3000`을 엽니다. 현재는 Sprint 0 Dashboard preview와 프레임워크에 독립적인 핵심 도메인 규칙이 구현되어 있습니다.
+
+## 품질 검사
+
+```bash
+npm run typecheck
+npm run lint
+npm test
+npm run build
+```
+
+PostgreSQL 초기 스키마는 `db/001_initial.sql`에 있으며 실제 연결과 migration 도구는 다음 개발 단계에서 확정합니다. 로컬 비밀값은 `.env.example`을 참고하되 `.env` 파일은 커밋하지 않습니다.

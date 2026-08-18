@@ -4,7 +4,7 @@
 
 ## ADR-001 모듈형 단일 애플리케이션
 
-- 상태: 제안
+- 상태: 승인
 - 결정: 웹·API는 하나의 애플리케이션으로 시작하고 분석 작업만 비동기 경계를 둔다.
 - 이유: 초기 운영 복잡도를 줄이면서 느리고 실패 가능한 수집을 분리할 수 있다.
 
@@ -32,16 +32,21 @@
 - 결정: AI 분석은 초안이며 사용자의 명시적 확인 후 공고를 생성한다.
 - 이유: 잘못된 마감일은 사용자에게 중대한 손실을 만들 수 있다.
 
+## ADR-006 초기 웹 기술 스택
+
+- 상태: 승인
+- 결정: TypeScript, Next.js App Router, React로 웹을 구성하고 Vitest로 도메인 규칙을 검증한다. 데이터 계층은 PostgreSQL을 기준으로 다음 마일스톤에서 ORM을 확정한다.
+- 이유: 한 코드베이스에서 UI와 서버 기능을 빠르게 구성하면서 핵심 업무 규칙을 프레임워크와 분리해 테스트할 수 있다.
+
 ## 미결정 항목
 
 | 항목 | 선택지 | 결정 시점 |
 |---|---|---|
 | 인증 | Auth.js / Supabase / Clerk | Sprint 0 |
 | ORM | Prisma / Drizzle | Sprint 0 |
-| 배포 | Vercel / container platform | Sprint 0 |
+| 배포 | Vercel / container platform | Sprint 1 이전 |
 | Queue | DB job / managed queue | Sprint 2 이전 |
 | AI 공급자·모델 | 품질·비용 평가 | Sprint 3 이전 |
 | 동적 페이지 수집 | managed browser / self-hosted | Sprint 3 이전 |
 | 원문 보존 | 미저장 / 단기 보존 | 베타 이전 |
 | 초기 지원 플랫폼 | 사용 조사로 상위 도메인 선정 | Sprint 3 이전 |
-
