@@ -27,10 +27,22 @@ export function JobStatusActions({ jobId, status }: { jobId: string; status: str
     setPending(undefined);
   }
 
+  async function remove() {
+    if (!window.confirm("이 공고와 모든 준비 작업을 영구 삭제할까요? 이 작업은 되돌릴 수 없습니다.")) return;
+    setError("");
+    const response = await fetch(`/api/jobs/${jobId}`, { method: "DELETE" });
+    if (!response.ok) { setError("공고를 삭제하지 못했습니다."); return; }
+    router.push("/applications");
+    router.refresh();
+  }
+
   return <div className="status-actions">
-    {status !== "IN_PROGRESS" && status !== "APPLIED" && <button disabled={Boolean(pending)} className="secondary-button" onClick={() => update("IN_PROGRESS")}>준비 시작</button>}
+    {(status === "ARCHIVED" || status === "EXPIRED") && <button disabled={Boolean(pending)} className="secondary-button" onClick={() => update("SAVED")}>진행 목록으로 복원</button>}
+    {status === "APPLIED" && <button disabled={Boolean(pending)} className="secondary-button" onClick={() => update("IN_PROGRESS")}>지원 완료 취소</button>}
+    {status !== "IN_PROGRESS" && status !== "APPLIED" && status !== "ARCHIVED" && status !== "EXPIRED" && <button disabled={Boolean(pending)} className="secondary-button" onClick={() => update("IN_PROGRESS")}>준비 시작</button>}
     {status !== "APPLIED" && <button disabled={Boolean(pending)} className="add-button" onClick={() => update("APPLIED")}>지원 완료</button>}
-    {status !== "ARCHIVED" && <button disabled={Boolean(pending)} className="text-button danger" onClick={() => update("ARCHIVED")}>보관</button>}
+    {status !== "ARCHIVED" && status !== "EXPIRED" && <button disabled={Boolean(pending)} className="text-button" onClick={() => update("ARCHIVED")}>보관</button>}
+    <button className="text-button danger" type="button" onClick={remove}>영구 삭제</button>
     {error && <p className="form-error" role="alert">{error}</p>}
   </div>;
 }

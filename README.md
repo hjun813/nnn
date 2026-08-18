@@ -46,9 +46,12 @@ npm run build
 `.env.example`을 복사해 `.env.local`을 만들고 PostgreSQL 연결 문자열과 인증 secret을 설정합니다. 로컬 비밀값 파일은 커밋하지 않습니다.
 
 ```bash
+npm run db:up
 npm run db:generate
 npm run db:migrate
 ```
+
+Docker Compose는 `postgres:17-alpine`을 `localhost:5432`에 실행하고 named volume에 데이터를 보존합니다. 종료는 `npm run db:down`, 로그 확인은 `npm run db:logs`를 사용합니다.
 
 Drizzle migration 적용 후 `/register`에서 계정을 만들 수 있습니다. 비밀번호는 bcrypt로 해시되며 Dashboard는 로그인한 사용자의 공고만 조회합니다.
 

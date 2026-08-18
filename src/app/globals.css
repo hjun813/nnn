@@ -123,9 +123,12 @@ th { color: var(--muted); background: #fafbf8; font-size: 12px; text-transform: 
 .detail-card dt { margin-top: 16px; color: var(--muted); font-size: 12px; }
 .detail-card dd { margin: 5px 0 0; }
 .task-list { display: grid; gap: 8px; }
-.task-item { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.task-item { display: grid; grid-template-columns: 22px 1fr 100px 28px; align-items: center; gap: 8px; padding: 11px 0; border-bottom: 1px solid var(--line); }
 .task-item:last-child { border-bottom: 0; }
 .task-item small { color: var(--muted); }
+.task-item select, .task-add select, .task-add input { min-width: 0; padding: 8px; color: var(--ink); background: #fbfcfa; border: 1px solid var(--line); border-radius: 7px; }
+.icon-button { color: var(--muted); background: transparent; border: 0; font-size: 20px; cursor: pointer; }
+.task-add { display: grid; grid-template-columns: 110px 1fr auto; gap: 7px; margin-top: 14px; }
 .memo { margin-top: 16px; }
 .memo p { color: var(--muted); white-space: pre-wrap; }
 .header-actions, .status-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 9px; }
@@ -135,6 +138,8 @@ th { color: var(--muted); background: #fafbf8; font-size: 12px; text-transform: 
 .status-actions .form-error { flex-basis: 100%; }
 .swagger-page { min-height: 100vh; background: white; }
 .swagger-top { display: flex; justify-content: space-between; padding: 14px 24px; color: white; background: #19382c; font-size: 13px; }
+.state-page { min-height: 100vh; display: grid; place-content: center; justify-items: start; gap: 18px; padding: 30px; }
+.state-page .intro { margin: 0 0 10px; }
 
 @media (max-width: 760px) {
   .app-shell { display: block; }
@@ -151,4 +156,8 @@ th { color: var(--muted); background: #fafbf8; font-size: 12px; text-transform: 
   .form-grid, .job-form .form-grid:has(label:nth-child(3)), .detail-grid { grid-template-columns: 1fr; }
   .job-row { grid-template-columns: 1fr auto; }
   .job-row small { grid-column: 1 / -1; text-align: left; }
+  .task-item { grid-template-columns: 22px 1fr 28px; }
+  .task-item select { grid-column: 2; }
+  .task-add { grid-template-columns: 1fr auto; }
+  .task-add select { grid-column: 1 / -1; }
 }
