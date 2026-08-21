@@ -84,6 +84,12 @@ export const notifications = pgTable("notification", {
   index("notification_user_read_created_idx").on(table.userId, table.readAt, table.createdAt),
 ]);
 
+export const rateLimits = pgTable("rate_limit", {
+  key: text("key").primaryKey(),
+  count: integer("count").notNull().default(1),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+}, (table) => [index("rate_limit_expires_idx").on(table.expiresAt)]);
+
 export const jobPostingsRelations = relations(jobPostings, ({ many, one }) => ({
   user: one(users, { fields: [jobPostings.userId], references: [users.id] }),
   applicationTasks: many(applicationTasks),

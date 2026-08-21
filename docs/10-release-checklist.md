@@ -24,7 +24,7 @@ AI URL 분석은 MVP 이후 별도 모듈로 추가한다. `CreateJobInput`을 �
 - [ ] 운영 secret 교체
 - [ ] PostgreSQL 백업과 복원 시험
 - [ ] 개인정보처리방침·이용약관 게시
-- [ ] 회원가입·로그인 rate limit 적용
+- [x] 회원가입·로그인 rate limit 적용
 - [x] 계정과 연결 데이터 삭제 API·UI 제공
 
 ## 배포 후 관찰

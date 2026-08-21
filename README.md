@@ -185,6 +185,22 @@ Playwright E2E는 다음 흐름을 검증합니다.
 
 `master` push와 pull request에서는 GitHub Actions가 품질 검사와 Docker 기반 E2E를 실행합니다.
 
+## 평가용 배포
+
+평가용 운영 구조는 Next.js 화면·API·인증을 Vercel에 배포하고 PostgreSQL을 Render에 두는 방식입니다.
+
+```text
+Browser → Vercel (Next.js + API + Auth.js) → Render PostgreSQL
+```
+
+배포 전에 Render의 외부 connection pool URL, `AUTH_SECRET`, production `AUTH_URL`, `CRON_SECRET`을 Vercel 환경변수로 등록합니다. 환경변수 형식은 다음 명령으로 검사할 수 있습니다.
+
+```bash
+npm run deploy:check
+```
+
+Vercel Cron은 매일 한국 시간 00:10에 만료 처리, 알림 생성, rate-limit 정리를 실행합니다. 생성부터 migration, 검증까지의 전체 절차는 [Vercel + Render 평가 배포 가이드](docs/11-vercel-render-deployment.md)를 따릅니다.
+
 ## 데이터와 보안
 
 - 비밀번호는 bcrypt로 해시합니다.
@@ -193,7 +209,7 @@ Playwright E2E는 다음 흐름을 검증합니다.
 - API 수정에는 version 기반 낙관적 잠금을 사용합니다.
 - 앱 컨테이너는 non-root 사용자로 실행합니다.
 - 배포 환경에서는 기본 secret을 사용하지 마세요.
-- 공개 배포 전 회원가입·로그인 rate limit을 추가해야 합니다.
+- 회원가입은 IP당 시간당 5회, 로그인은 IP·이메일 조합당 15분간 10회로 제한합니다.
 
 ## 프로젝트 구조
 
@@ -224,6 +240,7 @@ docs/               # 제품·개발·운영 문서
 - [테스트 및 운영 계획](docs/08-test-operations.md)
 - [의사결정 기록](docs/09-decisions.md)
 - [수동 등록 MVP 출시 체크리스트](docs/10-release-checklist.md)
+- [Vercel + Render 평가 배포 가이드](docs/11-vercel-render-deployment.md)
 
 ## MVP 이후
 

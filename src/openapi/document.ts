@@ -5,7 +5,7 @@ export const openApiDocument = {
   tags: [{ name: "Auth" }, { name: "Account" }, { name: "Jobs" }, { name: "Tasks" }, { name: "Notifications" }],
   paths: {
     "/register": {
-      post: { tags: ["Auth"], summary: "이메일 회원가입", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/RegistrationInput" } } } }, responses: { "201": { description: "가입 완료" }, "400": { $ref: "#/components/responses/BadRequest" }, "409": { description: "이미 가입된 이메일" } } },
+      post: { tags: ["Auth"], summary: "이메일 회원가입", requestBody: { required: true, content: { "application/json": { schema: { $ref: "#/components/schemas/RegistrationInput" } } } }, responses: { "201": { description: "가입 완료" }, "400": { $ref: "#/components/responses/BadRequest" }, "409": { description: "이미 가입된 이메일" }, "429": { description: "가입 요청 횟수 초과" } } },
     },
     "/account": {
       delete: { tags: ["Account"], summary: "계정과 연결 데이터 영구 삭제", security: [{ sessionCookie: [] }], responses: { "204": { description: "삭제 완료" }, "401": { $ref: "#/components/responses/Unauthorized" } } },

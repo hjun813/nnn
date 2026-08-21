@@ -15,6 +15,13 @@
       "when": 1787033438320,
       "tag": "0001_notifications",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1787287769584,
+      "tag": "0002_acoustic_thanos",
+      "breakpoints": true
     }
   ]
 }
